@@ -10,6 +10,8 @@ import TeamSection from '../components/Home/TeamSection';
 import FAQSection from '../components/Home/FAQSection';
 import CTASection from '../components/Home/CTASection';
 import DrAshwiniImage from '../assets/dr_ashwini.jpg';
+import TestimonialCard from '../components/shared/TestimonialCard';
+
 
 
 
