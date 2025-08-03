@@ -9,7 +9,7 @@ import AppointmentSection from '../components/Home/AppointmentSection';
 import TeamSection from '../components/Home/TeamSection';
 import FAQSection from '../components/Home/FAQSection';
 import CTASection from '../components/Home/CTASection';
-import DrAshwiniImage from '../assets/dr.ashwini.jpg'; // adjust path as needed
+import DrAshwiniImage from '../../assets/dr.ashwini.jpg'; 
 
 
 const mainHome = () => {
