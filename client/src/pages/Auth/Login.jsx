@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FiMail, FiLock, FiArrowRight, FiEye, FiEyeOff } from 'react-icons/fi';
 
@@ -24,7 +23,6 @@ const Login = () => {
     setIsSubmitting(true);
     
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       console.log('Login form submitted:', formData);
     } finally {
@@ -34,38 +32,19 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-md w-full space-y-8"
-      >
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
+      <div className="max-w-md w-full space-y-8">
+        <div>
           <h2 className="text-center text-4xl font-bold text-gray-900 mb-2">
             Welcome Back
           </h2>
           <p className="text-center text-lg text-gray-600">
             Sign in to continue your recovery journey
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="bg-white p-10 rounded-2xl shadow-xl border border-gray-100"
-        >
+        <div className="bg-white p-10 rounded-2xl shadow-xl border border-gray-100">
           <form className="space-y-6" onSubmit={handleSubmit}>
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="space-y-5"
-            >
+            <div className="space-y-5">
               {/* Email Input */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -130,15 +109,10 @@ const Login = () => {
                   </button>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Remember Me */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
-              className="flex items-center"
-            >
+            <div className="flex items-center">
               <input
                 id="remember-me"
                 name="remember-me"
@@ -148,14 +122,10 @@ const Login = () => {
               <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
                 Remember me
               </label>
-            </motion.div>
+            </div>
 
             {/* Submit Button */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-            >
+            <div>
               <button
                 type="submit"
                 disabled={isSubmitting}
@@ -178,16 +148,11 @@ const Login = () => {
                   </>
                 )}
               </button>
-            </motion.div>
+            </div>
           </form>
 
           {/* Sign Up Link */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2 }}
-            className="mt-6 text-center"
-          >
+          <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               Don't have an account?{' '}
               <Link 
@@ -197,9 +162,9 @@ const Login = () => {
                 Sign up now
               </Link>
             </p>
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

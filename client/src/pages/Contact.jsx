@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { FiMail, FiMapPin, FiPhone, FiSend, FiClock, FiAlertCircle } from 'react-icons/fi';
+import { FiMail, FiMapPin, FiPhone, FiSend, FiClock, FiAlertCircle, FiExternalLink, FiUser } from 'react-icons/fi';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -21,62 +20,24 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1500));
       console.log('Contact form submitted:', formData);
-      // Reset form after submission
       setFormData({ name: '', email: '', message: '' });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const contactMethods = [
-    {
-      icon: <FiMail className="text-blue-600" size={20} />,
-      title: "Email",
-      description: "support@physioflex.com",
-      bgColor: "bg-blue-100"
-    },
-    {
-      icon: <FiPhone className="text-blue-600" size={20} />,
-      title: "Phone",
-      description: "+1 (555) 123-4567",
-      bgColor: "bg-blue-100"
-    },
-    {
-      icon: <FiMapPin className="text-blue-600" size={20} />,
-      title: "Address",
-      description: "123 Therapy Lane, Health City, HC 12345",
-      bgColor: "bg-blue-100"
-    }
-  ];
-
   return (
     <div className="pt-24 pb-12 bg-gradient-to-b from-blue-50 to-white">
       <section className="container mx-auto px-4 py-12">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Our team is here to help with any questions about our services.
-          </p>
-        </motion.div>
+        
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100"
-          >
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
             <h3 className="text-2xl font-semibold text-gray-900 mb-6">Send us a message</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
@@ -92,7 +53,7 @@ const Contact = () => {
                   placeholder="John Doe"
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                 <input
@@ -106,7 +67,7 @@ const Contact = () => {
                   placeholder="your@email.com"
                 />
               </div>
-              
+
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
                 <textarea
@@ -120,12 +81,10 @@ const Contact = () => {
                   placeholder="How can we help you?"
                 ></textarea>
               </div>
-              
-              <motion.button
+
+              <button
                 type="submit"
                 disabled={isSubmitting}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
                 className={`flex items-center justify-center w-full px-6 py-3.5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium rounded-xl transition-all shadow-md ${isSubmitting ? 'opacity-80' : ''}`}
               >
                 {isSubmitting ? (
@@ -141,68 +100,94 @@ const Contact = () => {
                     Send Message <FiSend className="ml-2" />
                   </>
                 )}
-              </motion.button>
+              </button>
             </form>
-          </motion.div>
+          </div>
 
           {/* Contact Information */}
           <div className="space-y-8">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100"
-            >
-              <h3 className="text-2xl font-semibold text-gray-900 mb-6">Contact Information</h3>
-              <div className="space-y-6">
-                {contactMethods.map((method, index) => (
-                  <motion.div
-                    key={index}
-                    whileHover={{ x: 5 }}
-                    className="flex items-start"
-                  >
-                    <div className={`${method.bgColor} rounded-xl p-3 mr-4`}>
-                      {method.icon}
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-medium text-gray-900">{method.title}</h4>
-                      <p className="text-gray-600">{method.description}</p>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+            {/* Doctor Information Card */}
+            <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+              <div className="flex flex-col items-center mb-6">
+                <div className="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                  <FiUser className="text-blue-600 text-3xl" />
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-900 text-center">Dr. Ashwini Nathani (PT)</h3>
+                <p className="text-blue-600 font-medium">Musculoskeletal Physiotherapy Specialist</p>
+                 </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="bg-blue-50 rounded-2xl p-8 border border-blue-100"
-            >
-              <div className="flex items-center mb-4">
-                <div className="bg-blue-100 rounded-xl p-3 mr-4">
-                  <FiClock className="text-blue-600" size={20} />
-                </div>
-                <h3 className="text-2xl font-semibold text-gray-900">Support Hours</h3>
-              </div>
-              
-              <div className="space-y-3 pl-16">
-                <p className="text-gray-700"><span className="font-medium">Monday - Friday:</span> 9:00 AM - 6:00 PM</p>
-                <p className="text-gray-700"><span className="font-medium">Saturday:</span> 10:00 AM - 4:00 PM</p>
-                <p className="text-gray-700"><span className="font-medium">Sunday:</span> Closed</p>
-              </div>
-              
-              <div className="mt-6 pl-16">
+              <div className="space-y-5">
                 <div className="flex items-start">
-                  <div className="mt-1 mr-2 text-yellow-500">
-                    <FiAlertCircle size={18} />
+                  <div className="bg-blue-100 rounded-xl p-3 mr-4">
+                    <FiPhone className="text-blue-600" size={20} />
                   </div>
-                  <p className="text-gray-700">
-                    For urgent matters outside business hours, please call our emergency line at <span className="font-medium text-blue-600">+1 (555) 987-6543</span>.
-                  </p>
+                  <div>
+                    <h4 className="text-lg font-medium text-gray-900">Phone</h4>
+                    <a href="tel:9769057159" className="text-gray-600 hover:text-blue-600 transition">9769057159</a>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="bg-blue-100 rounded-xl p-3 mr-4">
+                    <FiMail className="text-blue-600" size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-medium text-gray-900">Email</h4>
+                    <a href="mailto:drashwininathani48@gmail.com" className="text-gray-600 hover:text-blue-600 transition">drashwininathani48@gmail.com</a>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="bg-blue-100 rounded-xl p-3 mr-4">
+                    <FiClock className="text-blue-600" size={20} />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-medium text-gray-900">Consultation Hours</h4>
+                    <p className="text-gray-600">9:00 AM - 12:00 PM</p>
+                  </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
+
+            {/* Location Card with Google Maps */}
+            <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+              <div className="flex items-center mb-6">
+                <div className="bg-blue-100 rounded-xl p-3 mr-4">
+                  <FiMapPin className="text-blue-600" size={20} />
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-900">Clinic Location</h3>
+              </div>
+
+              <div className="mb-6 pl-16">
+                <p className="text-gray-700 mb-2">Shop no 06, Building number 12</p>
+                <p className="text-gray-700 mb-2">Dignity CHS, Near Kedarnath Mandir</p>
+                <p className="text-gray-700">Nehru Nagar, Kurla East</p>
+              </div>
+
+              {/* Google Maps Embed */}
+              <div className="rounded-xl overflow-hidden shadow-md h-64">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.715998981592!2d72.8765603153796!3d19.066774258729!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c627a20bcaa9%3A0x7f3e9c3f4f4f4f4f!2sKedarnath%20Mandir%2C%20Nehru%20Nagar%2C%20Kurla%20East%2C%20Mumbai%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  title="Clinic Location"
+                ></iframe>
+              </div>
+
+              <div className="mt-4 flex justify-end">
+                <a
+                  href="https://maps.google.com?q=Shop+no+06,+building+number+no+12,+Dignity+chs+,+near+Kedarnath+mandir,+Nehru+Nagar+,+Kurla+East"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition"
+                >
+                  Open in Google Maps <FiExternalLink className="ml-1 w-4 h-4" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
