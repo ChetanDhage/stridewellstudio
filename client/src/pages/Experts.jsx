@@ -1,5 +1,5 @@
 import { FiMail, FiPhone, FiClock, FiArrowRight, FiCheck } from 'react-icons/fi';
-import DrAshwiniImage from '../assets/Dr.Ashwini.jpg'; 
+import DrAshwiniImage from '../assets/dr_ashwini.jpg'; 
 
 
 const Experts = () => {
