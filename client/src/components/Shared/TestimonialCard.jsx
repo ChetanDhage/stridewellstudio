@@ -2,9 +2,9 @@
 import { FiStar } from 'react-icons/fi';
 import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
 
-const TestimonialCard = ({ testimonial }) => {
+const TestimonialCard = ({key, testimonial }) => {
   return (
-    <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border border-gray-100 transform hover:-translate-y-2">
+    <div key={key} className="relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 group border border-gray-100 transform hover:-translate-y-2">
       {/* Gradient background element */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       
