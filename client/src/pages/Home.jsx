@@ -14,6 +14,7 @@ import DrAshwiniImage from '../assets/dr_ashwini.jpg';
 
 
 
+
 const mainHome = () => {
   // Data for the exercises section 
   const featuredExercises = [ 

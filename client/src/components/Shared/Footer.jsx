@@ -87,7 +87,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-gray-800/50 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-500 text-sm mb-4 md:mb-0">
-            © {new Date().getFullYear()} PhysioFlex. All rights reserved.
+            © {new Date().getFullYear()} Stridewell Studio. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
             <a href="#" className="text-gray-500 hover:text-white text-sm transition-colors hover:underline underline-offset-4">
