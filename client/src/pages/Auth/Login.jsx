@@ -1,14 +1,22 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FiMail, FiLock, FiArrowRight, FiEye, FiEyeOff } from 'react-icons/fi';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { FiMail, FiLock, FiArrowRight, FiEye, FiEyeOff, FiUser } from 'react-icons/fi';
+import { useAuth } from '../../contexts/AuthContext';
 
 const Login = () => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  
   const [formData, setFormData] = useState({
+    role: 'patient', // default role
+    username: '',
     email: '',
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,20 +26,48 @@ const Login = () => {
     }));
   };
 
+  const handleRoleChange = (role) => {
+    setFormData(prev => ({
+      ...prev,
+      role
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError('');
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      console.log('Login form submitted:', formData);
+      const result = await login(formData);
+      
+      if (result.success) {
+        // Redirect to intended page or role-specific dashboard
+        const from = location.state?.from?.pathname || getDashboardRoute(result.user.role);
+        navigate(from, { replace: true });
+      }
+    } catch {
+      setError('Invalid credentials. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const getDashboardRoute = (role) => {
+    switch (role) {
+      case 'admin':
+        return '/admin/dashboard';
+      case 'doctor':
+        return '/doctor/dashboard';
+      case 'patient':
+        return '/patient/dashboard';
+      default:
+        return '/dashboard';
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-gray-50 px-8 pt-30 pb-10">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="text-center text-4xl font-bold text-gray-900 mb-2">
@@ -42,9 +78,57 @@ const Login = () => {
           </p>
         </div>
 
-        <div className="bg-white p-10 rounded-2xl shadow-xl border border-gray-100">
+        <div className="card-elevated p-10">
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-600">{error}</p>
+            </div>
+          )}
+
+          {/* Role Selector */}
+          <div className="mb-6 flex justify-center gap-4">
+            {['patient', 'doctor'].map(role => (
+              <button
+                key={role}
+                type="button"
+                onClick={() => handleRoleChange(role)}
+                className={`px-6 py-2 rounded-xl font-semibold transition-all duration-200 focus-ring ${
+                  formData.role === role 
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-md' 
+                    : 'bg-gray-100 text-gray-700 border-gray-300 hover:bg-gray-200 hover:border-gray-400'
+                } border`}
+              >
+                {role.charAt(0).toUpperCase() + role.slice(1)}
+              </button>
+            ))}
+          </div>
+
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-5">
+              {/* Username Input */}
+              <div>
+                <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+                  Username
+                </label>
+                <div className="relative">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <FiUser className="text-gray-400" />
+                  </div>
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    autoComplete="username"
+                    required
+                    value={formData.username}
+                    onChange={handleChange}
+                    className="input-field pl-10"
+                    placeholder="Enter your username"
+                  />
+                </div>
+              </div>
+
               {/* Email Input */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -62,7 +146,7 @@ const Login = () => {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    className="pl-10 block w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    className="input-field pl-10"
                     placeholder="your@email.com"
                   />
                 </div>
@@ -93,18 +177,19 @@ const Login = () => {
                     required
                     value={formData.password}
                     onChange={handleChange}
-                    className="pl-10 pr-10 block w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                    className="input-field pl-10 pr-10"
                     placeholder="••••••••"
                   />
                   <button
                     type="button"
-                    className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                    className="absolute inset-y-0 right-0 pr-3 flex items-center focus-ring"
                     onClick={() => setShowPassword(!showPassword)}
+                    tabIndex={-1}
                   >
                     {showPassword ? (
-                      <FiEyeOff className="text-gray-400 hover:text-gray-500" />
+                      <FiEyeOff className="text-gray-400 hover:text-gray-500 transition-colors" />
                     ) : (
-                      <FiEye className="text-gray-400 hover:text-gray-500" />
+                      <FiEye className="text-gray-400 hover:text-gray-500 transition-colors" />
                     )}
                   </button>
                 </div>
@@ -117,7 +202,7 @@ const Login = () => {
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded focus-ring"
               />
               <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
                 Remember me
@@ -129,14 +214,11 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-lg font-medium rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all shadow-md ${isSubmitting ? 'opacity-75 cursor-not-allowed' : ''}`}
+                className={`group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-lg font-medium rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 focus-ring transition-all shadow-md ${isSubmitting ? 'loading' : ''}`}
               >
                 {isSubmitting ? (
                   <span className="flex items-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
+                    <div className="loading-spinner w-5 h-5 mr-3"></div>
                     Signing in...
                   </span>
                 ) : (

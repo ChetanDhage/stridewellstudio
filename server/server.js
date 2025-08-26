@@ -1,40 +1,22 @@
-require("dotenv").config();
-import express from "express";
-import { json } from "body-parser";
-import cookieParser from "cookie-parser";
-import cors from "cors";
-import connectDB from "./config/db";
+import 'dotenv/config';
+import { createApp } from './config/app.js';
+import { connectDB } from './config/db.js';
 
-const app = express();
+const PORT = process.env.PORT || 4000;
 
-// Connect to database
-connectDB();
+async function bootstrap() {
+  await connectDB(process.env.MONGODB_URI);
+  const app = createApp();
+  app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
+    console.log(`API running on http://localhost:${PORT}`);
+  });
+}
 
-// Middleware
-app.use(json());
-app.use(cookieParser());
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
-    credentials: true,
-  })
-);
-
-// Routes
-app.use("/api/auth", require("./routes/auth.routes"));
-app.use("/api/users", require("./routes/user.routes"));
-
-// Error handling
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: "Server error" });
+bootstrap().catch((err) => {
+  // eslint-disable-next-line no-console
+  console.error('Failed to start server', err);
+  process.exit(1);
 });
 
-// Initialize roles
-import initializeRoles from "./config/initRoles";
-initializeRoles();
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});

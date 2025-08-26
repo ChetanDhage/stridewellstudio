@@ -1,21 +1,19 @@
-import { FiAward, FiUsers, FiActivity, FiStar, FiHeart } from 'react-icons/fi';
+import { FiAward, FiUsers, FiActivity } from 'react-icons/fi';
 
 const About = () => {
-
-
-
   return (
-    <div className="pt-24 pb-12 overflow-hidden">
+    <div className="pt-24 pb-12 overflow-hidden font-body text-darkGray bg-neutralGray">
+      
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-blue-900 to-blue-700 text-white py-24">
+      <section className="relative overflow-hidden bg-gradient-to-r from-primaryBlue to-blue-700 text-white py-24 font-heading">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0 bg-[url('/images/dot-pattern.svg')]"></div>
         </div>
         <div className="container mx-auto px-4 relative z-10 text-center max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Your Journey to <span className="text-teal-300">Lifelong Wellness</span> Starts Here
+            Your Journey to <span className="text-freshGreen">Lifelong Wellness</span> Starts Here
           </h1>
-          <p className="text-xl text-blue-100 mb-8">
+          <p className="text-xl text-lightBlueTint mb-8">
             Bridging the gap between injury recovery and lifelong wellness through personalized care
           </p>
         </div>
@@ -32,21 +30,20 @@ const About = () => {
                   alt="StrideWell team" 
                   className="w-full h-auto"
                 />
-                
               </div>
             </div>
 
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              <h2 className="text-3xl md:text-4xl font-bold text-primaryBlue mb-6 font-heading">
                 Empowering Your Health Journey
               </h2>
               <div className="space-y-6">
-                <p className="text-lg text-gray-600">
+                <p className="text-lg text-darkGray font-body">
                   Welcome to StrideWell Studio, where we bridge the gap between injury recovery and lifelong wellness. 
                   Founded and led by experienced physiotherapists and consultants, our mission is to empower you with 
                   the knowledge and tools to take control of your health.
                 </p>
-                <p className="text-lg text-gray-600">
+                <p className="text-lg text-darkGray font-body">
                   We don't believe in one-size-fits-all solutions; instead, we excel at creating customized exercise 
                   plans that precisely fit your unique needs, helping you regain strength, improve mobility, and build 
                   lasting resilience.
@@ -57,14 +54,13 @@ const About = () => {
         </div>
       </section>
 
-      
       {/* Values Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-lightBlueTint">
         <div className="container mx-auto px-4 text-center mb-16">
-          <div className="inline-block px-4 py-1.5 bg-teal-50 text-teal-600 rounded-full text-sm font-medium mb-4">
+          <div className="inline-block px-4 py-1.5 bg-freshGreen/20 text-freshGreen rounded-full text-sm font-medium mb-4 font-heading">
             OUR APPROACH
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-primaryBlue mb-4 font-heading">
             What Makes StrideWell Different
           </h2>
         </div>
@@ -72,36 +68,35 @@ const About = () => {
         <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              icon: <FiAward className="w-8 h-8" />,
+              icon: <FiAward className="w-8 h-8 text-primaryBlue" />,
               title: "Personalized Plans",
               description: "Tailored exercise programs designed specifically for your body and goals",
-              color: "text-blue-600 bg-blue-50"
+              color: "bg-primaryBlue/10 text-primaryBlue",
             },
             {
-              icon: <FiActivity className="w-8 h-8" />,
+              icon: <FiActivity className="w-8 h-8 text-freshGreen" />,
               title: "Holistic Wellness",
               description: "Addressing not just injuries but your overall movement health",
-              color: "text-teal-600 bg-teal-50"
+              color: "bg-freshGreen/10 text-freshGreen",
             },
             {
-              icon: <FiUsers className="w-8 h-8" />,
+              icon: <FiUsers className="w-8 h-8 text-indigo-600" />,
               title: "Empowerment Focus",
               description: "Teaching you the tools to maintain wellness long after therapy ends",
-              color: "text-indigo-600 bg-indigo-50"
-            }
+              color: "bg-indigo-100 text-indigo-600",
+            },
           ].map((value, index) => (
-            <div key={index} className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all">
+            <div key={index} className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-all font-body">
               <div className={`w-16 h-16 rounded-xl flex items-center justify-center mb-6 ${value.color}`}>
                 {value.icon}
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">{value.title}</h3>
-              <p className="text-gray-600">{value.description}</p>
+              <h3 className="text-xl font-semibold text-primaryBlue mb-3">{value.title}</h3>
+              <p className="text-darkGray">{value.description}</p>
             </div>
           ))}
         </div>
       </section>
 
-    
     </div>
   );
 };

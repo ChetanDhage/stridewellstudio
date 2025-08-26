@@ -31,52 +31,58 @@ const Contact = () => {
   };
 
   return (
-    <div className="pt-24 pb-12 bg-gradient-to-b from-blue-50 to-white">
-      <section className="container mx-auto px-4 py-12">
-        
-
+    <div className="pt-24 pb-12 bg-gradient-to-b from-lightBlueTint to-white font-body text-darkGray">
+      <section className="container mx-auto px-4 py-12 max-w-6xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Form */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-            <h3 className="text-2xl font-semibold text-gray-900 mb-6">Send us a message</h3>
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-neutralGray font-body">
+            <h3 className="text-2xl font-semibold text-primaryBlue mb-6 font-heading">
+              Send us a message
+            </h3>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                <label htmlFor="name" className="block text-sm font-medium text-darkGray mb-2">
+                  Full Name
+                </label>
                 <input
                   type="text"
                   id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  className="w-full px-4 py-3 border border-neutralGray rounded-xl focus:ring-2 focus:ring-freshGreen focus:border-freshGreen transition-all"
                   required
                   placeholder="John Doe"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                <label htmlFor="email" className="block text-sm font-medium text-darkGray mb-2">
+                  Email Address
+                </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  className="w-full px-4 py-3 border border-neutralGray rounded-xl focus:ring-2 focus:ring-freshGreen focus:border-freshGreen transition-all"
                   required
                   placeholder="your@email.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">Your Message</label>
+                <label htmlFor="message" className="block text-sm font-medium text-darkGray mb-2">
+                  Your Message
+                </label>
                 <textarea
                   id="message"
                   name="message"
                   rows="5"
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                  className="w-full px-4 py-3 border border-neutralGray rounded-xl focus:ring-2 focus:ring-freshGreen focus:border-freshGreen transition-all"
                   required
                   placeholder="How can we help you?"
                 ></textarea>
@@ -85,13 +91,31 @@ const Contact = () => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className={`flex items-center justify-center w-full px-6 py-3.5 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium rounded-xl transition-all shadow-md ${isSubmitting ? 'opacity-80' : ''}`}
+                className={`flex items-center justify-center w-full px-6 py-3.5 bg-gradient-to-r from-primaryBlue to-freshGreen hover:from-freshGreen hover:to-primaryBlue text-white font-medium rounded-xl transition-all shadow-md ${
+                  isSubmitting ? 'opacity-80' : ''
+                }`}
               >
                 {isSubmitting ? (
                   <>
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <svg
+                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
                     </svg>
                     Sending...
                   </>
@@ -105,63 +129,20 @@ const Contact = () => {
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-8">
-            {/* Doctor Information Card */}
-            <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-              <div className="flex flex-col items-center mb-6">
-                <div className="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                  <FiUser className="text-blue-600 text-3xl" />
-                </div>
-                <h3 className="text-2xl font-semibold text-gray-900 text-center">Dr. Ashwini Nathani (PT)</h3>
-                <p className="text-blue-600 font-medium">Musculoskeletal Physiotherapy Specialist</p>
-                 </div>
-
-              <div className="space-y-5">
-                <div className="flex items-start">
-                  <div className="bg-blue-100 rounded-xl p-3 mr-4">
-                    <FiPhone className="text-blue-600" size={20} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-medium text-gray-900">Phone</h4>
-                    <a href="tel:9769057159" className="text-gray-600 hover:text-blue-600 transition">9769057159</a>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="bg-blue-100 rounded-xl p-3 mr-4">
-                    <FiMail className="text-blue-600" size={20} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-medium text-gray-900">Email</h4>
-                    <a href="mailto:drashwininathani48@gmail.com" className="text-gray-600 hover:text-blue-600 transition">drashwininathani48@gmail.com</a>
-                  </div>
-                </div>
-
-                <div className="flex items-start">
-                  <div className="bg-blue-100 rounded-xl p-3 mr-4">
-                    <FiClock className="text-blue-600" size={20} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-medium text-gray-900">Consultation Hours</h4>
-                    <p className="text-gray-600">9:00 AM - 12:00 PM</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+          <div className="space-y-8 font-body">
             {/* Location Card with Google Maps */}
-            <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            <div className="bg-white rounded-2xl shadow-xl p-8 border border-neutralGray">
               <div className="flex items-center mb-6">
-                <div className="bg-blue-100 rounded-xl p-3 mr-4">
-                  <FiMapPin className="text-blue-600" size={20} />
+                <div className="bg-lightBlueTint rounded-xl p-3 mr-4">
+                  <FiMapPin className="text-freshGreen" size={20} />
                 </div>
-                <h3 className="text-2xl font-semibold text-gray-900">Clinic Location</h3>
+                <h3 className="text-2xl font-semibold text-primaryBlue font-heading">Clinic Location</h3>
               </div>
 
-              <div className="mb-6 pl-16">
-                <p className="text-gray-700 mb-2">Shop no 06, Building number 12</p>
-                <p className="text-gray-700 mb-2">Dignity CHS, Near Kedarnath Mandir</p>
-                <p className="text-gray-700">Nehru Nagar, Kurla East</p>
+              <div className="mb-6 pl-16 text-darkGray">
+                <p className="mb-2">Shop no 06, Building number 12</p>
+                <p className="mb-2">Dignity CHS, Near Kedarnath Mandir</p>
+                <p>Nehru Nagar, Kurla East</p>
               </div>
 
               {/* Google Maps Embed */}
@@ -182,7 +163,7 @@ const Contact = () => {
                   href="https://maps.google.com?q=Shop+no+06,+building+number+no+12,+Dignity+chs+,+near+Kedarnath+mandir,+Nehru+Nagar+,+Kurla+East"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition"
+                  className="inline-flex items-center text-freshGreen hover:text-primaryBlue font-medium transition"
                 >
                   Open in Google Maps <FiExternalLink className="ml-1 w-4 h-4" />
                 </a>

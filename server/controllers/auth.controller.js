@@ -1,89 +1,31 @@
-import { sign } from "jsonwebtoken";
-import bcrypt from "bcryptjs";
-import User, { findOne } from "../models/user.model";
-import { findOne as _findOne } from "../models/role.model";
-import { ROLES } from "./config/roles";
-require("dotenv").config();
+import jwt from 'jsonwebtoken';
+import { User } from '../models/User.js';
+import { ApiError } from '../utils/ApiError.js';
+import { ApiResponse } from '../utils/ApiResponse.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
-// Register new user
-export async function signup(req, res) {
-  try {
-    const { name, email, password } = req.body;
+const signToken = (user) =>
+  jwt.sign({ sub: user._id.toString(), role: user.role }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+  });
 
-    // Create user
-    const user = new User({
-      name,
-      email,
-      password,
-    });
+export const register = asyncHandler(async (req, res) => {
+  const { username, email, password, role, name, specialization } = req.body;
+  const exists = await User.findOne({ $or: [{ email }, { username }] });
+  if (exists) throw new ApiError(400, 'User already exists');
+  const user = await User.create({ username, email, password, role, name, specialization });
+  const token = signToken(user);
+  res.status(201).json(new ApiResponse(true, { token, user: { id: user._id, username, email, role } }));
+});
 
-    // Set default role (user)
-    const userRole = await _findOne({ name: ROLES.USER });
-    user.roles = [userRole._id];
+export const login = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) throw new ApiError(401, 'Invalid credentials');
+  const ok = await user.comparePassword(password);
+  if (!ok) throw new ApiError(401, 'Invalid credentials');
+  const token = signToken(user);
+  res.json(new ApiResponse(true, { token, user: { id: user._id, username: user.username, email, role: user.role } }));
+});
 
-    await user.save();
 
-    // Generate token
-    const token = sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
-
-    res.cookie("accessToken", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    });
-
-    res.status(201).json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      roles: [ROLES.USER],
-    });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-}
-
-// Login user
-export async function signin(req, res) {
-  try {
-    const { email, password } = req.body;
-
-    // Find user
-    const user = await findOne({ email }).populate("roles");
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    // Check password
-    const isPasswordValid = await user.comparePassword(password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
-
-    // Generate token
-    const token = sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
-    });
-
-    res.cookie("accessToken", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    });
-
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      roles: user.roles.map((role) => role.name),
-    });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-}
-
-// Logout user
-export function signout(req, res) {
-  res.clearCookie("accessToken");
-  res.json({ message: "Signed out successfully" });
-}

@@ -1,6 +1,6 @@
 import { FiCheck, FiStar, FiZap, FiAward, FiShield, FiInfo } from 'react-icons/fi';
 
-const PricingCard = ({ plan, index }) => {
+const PricingCard = ({ plan }) => {
   const planIcons = {
     Basic: {
       icon: <FiShield className="w-6 h-6" />
@@ -105,11 +105,14 @@ const PricingCard = ({ plan, index }) => {
 
         {/* CTA Button */}
         <div className="relative overflow-hidden rounded-xl">
+          <a href="/appointment" className="inline-block">
+
           <button
             className={`w-full py-3.5 px-6 text-white font-semibold rounded-xl transition-all shadow-lg ${colors.button} transform hover:scale-105 active:scale-95 relative z-10`}
           >
             {plan.buttonText || 'Get Started'}
           </button>
+          </a>
           {plan.featured && (
             <div 
               className="absolute inset-0 bg-gradient-to-r from-blue-400 to-blue-300 opacity-0 group-hover:opacity-20 rounded-xl -z-10 blur-md transition-opacity duration-300"

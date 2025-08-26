@@ -14,7 +14,6 @@ import {
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const upcomingAppointments = [
     {
